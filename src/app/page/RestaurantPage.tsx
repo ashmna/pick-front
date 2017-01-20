@@ -30,7 +30,7 @@ export class RestaurantPage extends React.Component<IRestaurantPageProps, IResta
             .then((restaurants: any[]) => {
                 this.restaurants = restaurants;
                 this.setState({loading: false});
-            })
+            });
     }
 
 

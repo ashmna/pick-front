@@ -34,10 +34,9 @@ export class RestaurantItemCookingSpeedPage extends React.Component<IRestaurantI
             .getRestaurantItemCookingSpeed(this.restaurantId, this.itemNumber)
             .then((data: any) => {
                 this.data = data;
-                console.log(this.data)
                 this.setState({loading: false});
                 this.initChart();
-            })
+            });
     }
 
     private initChart() {
@@ -61,8 +60,8 @@ export class RestaurantItemCookingSpeedPage extends React.Component<IRestaurantI
             title: this.restaurantId + " --- " + this.itemNumber,
             width: 1000,
             height: 500,
-            curveType: 'function',
-            legend: { position: 'bottom' }
+            curveType: "function",
+            legend: { position: "bottom" }
         };
 
         // Instantiate and draw our chart, passing in some options.

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 import {RestaurantService} from "../service/RestaurantService";
 import {Link, IInjectedProps} from "react-router";
 
@@ -18,7 +18,7 @@ export class RestaurantItemPage extends React.Component<IRestaurantItemPageProps
 
     constructor(props: IRestaurantItemPageProps, context: any) {
         super(props, context);
-        this.restaurantId = parseInt(props.params['restaurantId'], 10);
+        this.restaurantId = parseInt(props.params["restaurantId"], 10);
         this.state = {
             loading: true,
         };
@@ -32,7 +32,7 @@ export class RestaurantItemPage extends React.Component<IRestaurantItemPageProps
             .then((restaurantItems: any[]) => {
                 this.restaurantItems = restaurantItems;
                 this.setState({loading: false});
-            })
+            });
     }
 
 
