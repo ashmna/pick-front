@@ -76,7 +76,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, ISettingsP
             <div>
                 <div id="chart_div"></div>
                 <div>
-                    <Slider style={{height: 100}} axis="y" defaultValue={0.5} />
+                    <Slider style={{height: 100}} defaultValue={0.5} />
                 </div>
             </div>
         );
