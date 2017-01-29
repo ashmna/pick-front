@@ -8,6 +8,7 @@ import {Dashboard} from "./Dashboard";
 import {RestaurantPage} from "./page/RestaurantPage";
 import {RestaurantItemPage} from "./page/RestaurantItemPage";
 import {RestaurantItemCookingSpeedPage} from "./page/RestaurantItemCookingSpeedPage";
+import {StatePage} from "./page/StatePage";
 
 injectTapEventPlugin();
 
@@ -22,11 +23,10 @@ injectTapEventPlugin();
 ReactDom.render(
     <Router history={hashHistory}>
         <Route path="/" component={Dashboard}>
-            <IndexRoute component={RestaurantPage}/>
+            <IndexRoute component={StatePage}/>
             <Route path="restaurants" component={RestaurantPage}/>
             <Route path="restaurant-items/:restaurantId" component={RestaurantItemPage}/>
             <Route path="restaurant-item-cooking-speed/:restaurantId/:itemNumber" component={RestaurantItemCookingSpeedPage}/>
-            <IndexRoute component={RestaurantPage}/>
         </Route>
     </Router>,
     document.getElementById("app")
