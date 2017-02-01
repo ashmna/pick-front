@@ -26,7 +26,7 @@ export class SettingsPage extends React.Component<ISettingsPageProps, ISettingsP
         this.state = {
             loading: true,
         };
-        // this.loadRestaurants();
+        // this.loadCouriers();
     }
 
     private loadRestaurants() {
@@ -76,7 +76,6 @@ export class SettingsPage extends React.Component<ISettingsPageProps, ISettingsP
             <div>
                 <div id="chart_div"></div>
                 <div>
-                    <Slider style={{height: 100}} defaultValue={0.5} />
                 </div>
             </div>
         );

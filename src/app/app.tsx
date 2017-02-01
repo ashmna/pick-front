@@ -1,5 +1,4 @@
 /// <reference path="../../types/google.d.ts" />
-
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import * as injectTapEventPlugin from "react-tap-event-plugin";
@@ -9,6 +8,7 @@ import {RestaurantPage} from "./page/RestaurantPage";
 import {RestaurantItemPage} from "./page/RestaurantItemPage";
 import {RestaurantItemCookingSpeedPage} from "./page/RestaurantItemCookingSpeedPage";
 import {StatePage} from "./page/StatePage";
+import {CourierPage} from "./page/CourierPage";
 
 injectTapEventPlugin();
 
@@ -27,6 +27,7 @@ ReactDom.render(
             <Route path="restaurants" component={RestaurantPage}/>
             <Route path="restaurant-items/:restaurantId" component={RestaurantItemPage}/>
             <Route path="restaurant-item-cooking-speed/:restaurantId/:itemNumber" component={RestaurantItemCookingSpeedPage}/>
+            <Route path="couriers" component={CourierPage}/>
         </Route>
     </Router>,
     document.getElementById("app")
