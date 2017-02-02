@@ -71,7 +71,7 @@ export class CourierPage extends React.Component<ICourierPageProps, ICourierPage
             <div>
 
                 <Table
-                    height="400"
+                    height="400px"
                     fixedHeader={true}
                     fixedFooter={false}
                     selectable={false}

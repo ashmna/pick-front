@@ -44,7 +44,7 @@ export class RestaurantItemPage extends React.Component<IRestaurantItemPageProps
             <div>
 
                 <Table
-                    height="400"
+                    height="400px"
                     fixedHeader={true}
                     fixedFooter={false}
                     selectable={false}
