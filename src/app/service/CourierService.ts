@@ -68,4 +68,17 @@ export class CourierService {
                 .fail(reject);
         });
     }
+
+    completeOrderCourier(courierId: number): Promise<any> {
+        return new Promise((resolve, reject) => {
+            ajax({
+                method: "GET",
+                url: url("pick/courier/complete/" + courierId),
+                type: "jsonp",
+                contentType: "application/json; charset=utf-8",
+            })
+                .done(resolve)
+                .fail(reject);
+        });
+    }
 }

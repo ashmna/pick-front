@@ -63,6 +63,14 @@ export class CourierPage extends React.Component<ICourierPageProps, ICourierPage
             });
     }
 
+    private completeOrderCourier(courier: any) {
+        console.log(' - completeOrderCourier', courier);
+        this.courierService.completeOrderCourier(courier.courier_id)
+            .then((res) => {
+                console.log('completeOrderCourier', res);
+            });
+    }
+
     render() {
         if (this.state.loading) {
             return (<h1>Loading...</h1>);
@@ -85,6 +93,10 @@ export class CourierPage extends React.Component<ICourierPageProps, ICourierPage
                         <TableRow>
                             <TableHeaderColumn tooltip="The Id">Id</TableHeaderColumn>
                             <TableHeaderColumn tooltip="The count">Count</TableHeaderColumn>
+                            <TableHeaderColumn>Complete</TableHeaderColumn>
+                            <TableHeaderColumn>Enable</TableHeaderColumn>
+                            <TableHeaderColumn>Disable</TableHeaderColumn>
+                            <TableHeaderColumn>Move</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody
@@ -97,6 +109,9 @@ export class CourierPage extends React.Component<ICourierPageProps, ICourierPage
                             <TableRow key={index} selected={row.selected}>
                                 <TableRowColumn>{row.courier_id}</TableRowColumn>
                                 <TableRowColumn>{row.count}</TableRowColumn>
+                                <TableRowColumn>
+                                    <FlatButton label="Complete" onTouchTap={() => this.completeOrderCourier(row)}/>
+                                </TableRowColumn>
                                 <TableRowColumn>
                                     <FlatButton label="Enable" onTouchTap={() => this.enableCourier(row)}/>
                                 </TableRowColumn>

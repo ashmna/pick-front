@@ -26,21 +26,28 @@ export class Map extends React.Component<IMapProps, IMapState> {
     }
 
     syncData(list: any[]) {
-        this.clearMarkers();
+        const dataList: any = {};
         list.forEach(data => {
-            this.addMarker(data);
+            dataList[data[4]] = data;
         });
-    }
-
-    setMapOnAll(map: any) {
         for (let i = 0; i < this.markers.length; i++) {
-            this.markers[i].setMap(map);
-        }
-    }
+            if (!dataList[this.markers[i].id]) {
+                this.markers[i].marker.setMap(null);
+                continue;
+            }
 
-    clearMarkers() {
-        this.setMapOnAll(null);
-        this.markers = [];
+            const id = this.markers[i].id;
+
+            if (dataList[id][5] !== this.markers[i].key) {
+                this.markers[i].marker.setMap(null);
+                continue;
+            }
+
+            delete dataList[id];
+        }
+        for (let key in dataList) {
+            this.addMarker(dataList[key]);
+        }
     }
 
     addMarker(data: any) {
@@ -51,20 +58,24 @@ export class Map extends React.Component<IMapProps, IMapState> {
         let marker = new google.maps.Marker({
             position: {lat: data[0], lng: data[1]},
             map: this.map,
-            title: data[2],
             icon: this.toIcon(data[3]),
         });
-
-        this.markers.push(marker);
+        let infowindow = new google.maps.InfoWindow({
+            content: data[2],
+        });
+        marker.addListener('click', () => {
+            infowindow.open(this.map, marker);
+        });
+        this.markers.push({marker: marker, id: data[4], key: data[5]});
     }
 
     toIcon(name: string): string {
         const icons: any = {
             busy: 'icon/busy.png',
-            customer: 'icon/customer.png',
+            customer_busy: 'icon/customer_busy.png',
+            customer_wait: 'icon/customer_wait.png',
             restaurant: 'icon/restaurant.png',
             wait: 'icon/wait.png',
-            wait2: 'icon/wait2.png',
         };
         return icons[name];
     }

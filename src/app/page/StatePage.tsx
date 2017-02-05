@@ -3,7 +3,7 @@ import {IInjectedProps} from "react-router";
 import Slider from "material-ui/Slider";
 import {StateService} from "../service/StateService";
 import {Map} from "../component/Map";
-
+import FlatButton from 'material-ui/FlatButton';
 
 interface IStatePageProps extends IInjectedProps {
 }
@@ -25,15 +25,21 @@ export class StatePage extends React.Component<IStatePageProps, IStatePageState>
     }
 
     private loadState() {
+        this.stateService.getCurrentState().then((data: any) => {
+            if (!this.map) {
+                return;
+            }
+            this.map.syncData(data);
+            setTimeout(() => this.loadState(), 1000);
+        }).catch(() => {
+            setTimeout(() => this.loadState(), 8000);
+        });
+    }
 
-        setInterval(() => {
-            this.stateService.getCurrentState().then((data: any) => {
-                if (!this.map) {
-                    return;
-                }
-                this.map.syncData(data);
-            });
-        }, 5000);
+    private randomOrder() {
+        this.stateService.setRandomOrder().then((data: any) => {
+            console.log(data);
+        });
     }
 
 
@@ -41,6 +47,10 @@ export class StatePage extends React.Component<IStatePageProps, IStatePageState>
         return (
             <div>
                 <Map ref={(map: Map) => this.map = map}/>
+                <div>
+                    <br/>
+                    <FlatButton label="Add Random Order" onTouchTap={() => this.randomOrder()}/>
+                </div>
             </div>
         );
     }
