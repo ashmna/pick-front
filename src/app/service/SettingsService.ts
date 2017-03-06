@@ -28,4 +28,8 @@ export class SettingsService {
                 .fail(reject);
         });
     }
+
+
+
+
 }

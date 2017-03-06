@@ -42,6 +42,12 @@ export class StatePage extends React.Component<IStatePageProps, IStatePageState>
         });
     }
 
+    private regenerateToken() {
+        this.stateService.regenerateToken().then((data: any) => {
+            console.log(data);
+        });
+    }
+
 
     render() {
         return (
@@ -49,7 +55,8 @@ export class StatePage extends React.Component<IStatePageProps, IStatePageState>
                 <Map ref={(map: Map) => this.map = map}/>
                 <div>
                     <br/>
-                    <FlatButton label="Add Random Order" onTouchTap={() => this.randomOrder()}/>
+                    <FlatButton label="Add Random Order" onTouchTap={this.randomOrder.bind(this)}/>
+                    <FlatButton label="Regenerate Token" onTouchTap={this.regenerateToken.bind(this)}/>
                 </div>
             </div>
         );

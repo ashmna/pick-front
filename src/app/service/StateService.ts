@@ -74,4 +74,20 @@ export class StateService {
     getRandomInt(min: number, max: number): number {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    regenerateToken(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            ajax({
+                method: "PUT",
+                url: url("token/gen"),
+                type: "jsonp",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    partner_id: 1
+                }),
+            })
+                .done(resolve)
+                .fail(reject);
+        });
+    }
 }
