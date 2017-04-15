@@ -45,12 +45,11 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
                  onMouseEnter={() => this.setState({active: true})}
                  onMouseLeave={() => this.setState({active: false})}
             >
-                <div>
+                <div className="row">
                     <div className="col-md-3">{this.props.orderData.id}</div>
                     <div className="col-md-3">{this.props.orderData.address}</div>
                     <div className="col-md-3">{this.props.orderData.restourant}</div>
-                    <div className="col-md-3">blah </div>
-
+                    <div className="col-md-3">{this.props.orderData.courier}</div>
                 </div>
 
             </Paper>
