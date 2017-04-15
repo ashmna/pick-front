@@ -88,9 +88,7 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
             <div>
 
                 {this.orders.map((order, index) => (
-                    <div className="row">
-                        <OrderItem key={index} orderData={order}/>
-                    </div>
+                    <OrderItem key={index} orderData={order}/>
                 ))}
             </div>
         );
