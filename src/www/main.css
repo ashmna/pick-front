@@ -9,3 +9,26 @@ body {
     line-height: 20px;
 }
 
+
+.transport-type{
+    display: flex;
+}
+.transport-type svg{
+
+}
+.transport-type-title{
+    display: flex;
+}
+.transport-type-title span{
+    margin-right: 10px;
+
+}
+.courier-info{
+    height: 40px;
+}
+.courier-image{
+    height: 100%;
+}
+.courier-image img{
+ height: 100%;
+}

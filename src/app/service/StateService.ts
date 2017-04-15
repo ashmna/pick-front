@@ -60,7 +60,7 @@ export class StateService {
 
 
         return new Promise((resolve, reject) => {
-            ajax({
+            /*ajax({
                 method: "PUT",
                 url: url("pick/order/" + orderId),
                 type: "jsonp",
@@ -68,7 +68,8 @@ export class StateService {
                 data: JSON.stringify({order: order_data}),
             })
                 .done(resolve)
-                .fail(reject);
+                .fail(reject);*/
+            resolve()
         });
     }
 

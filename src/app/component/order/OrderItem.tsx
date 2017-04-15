@@ -10,6 +10,8 @@ import RestaurantLocationIcon from "material-ui/svg-icons/action/shopping-cart";
 import BicycleIcon from "material-ui/svg-icons/maps/directions-bike";
 import CarIcon from "material-ui/svg-icons/maps/directions-boat";
 import BikeIcon from "material-ui/svg-icons/action/motorcycle";
+import origin = __MaterialUI.propTypes.origin;
+import {white} from "material-ui/styles/colors";
 
 export interface OrderItemProps {
     orderData: any;
@@ -50,7 +52,7 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
         super(props, context);
         this.state = {
             active: false,
-            selectedCourier: null,
+            selectedCourier: this.couriers[0]||null,
         };
     }
 
@@ -112,24 +114,42 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
                 <div className="col-md-4">
                     <div className="row">
                         <div className="col-xs-12">
-                            {}
 
-                            {this.props.orderData["order_address"]}
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            {this.state.selectedCourier["transport_type"] === "" && <OrderLocationIcon color={colors.grey600}/>}
+                    <div className="row courier-info">
+
+                        <div className="col-xs-2 col-md-2">
                             <h2>{this.state.selectedCourier["name"]}</h2>
-                            directions bike
-                            directions car
-                            motorcycle
                         </div>
+                        <div className="col-xs-4 col-md-4 courier-image">
+                            <img src="https://i.stack.imgur.com/Lkn5a.png?s=328&g=1"/>
+
+                        </div>
+
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
-                            <RestaurantLocationIcon/>
-                            {this.props.orderData["restaurant_info"]}
+                            <div className="row">
+                                <h3 className="transport-type">
+                                    <span>transport - </span>
+                                    <span className="transport-type-title">
+                                        <span >{this.state.selectedCourier["transport_type"]}</span>
+
+                                        {this.state.selectedCourier["transport_type"] === "Bike" && <BikeIcon color={colors.grey600}/>}
+                                        {this.state.selectedCourier["transport_type"] === "Car" && <CarIcon color={colors.grey600}/>}
+                                        {this.state.selectedCourier["transport_type"] === "Bicycle" && <BicycleIcon color={colors.grey600}/>}
+                                    </span>
+                                </h3>
+                                <span className="col-md-4">
+
+                                </span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <h3>Will deliver at {this.state.selectedCourier.eta}</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
