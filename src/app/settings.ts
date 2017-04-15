@@ -4,4 +4,5 @@ export const menu: {path: string, name: string}[] = [
     {path: "/", name: "State"},
     {path: "/restaurants", name: "Restaurant"},
     {path: "/couriers", name: "Couriers"},
+    {path: "/orders", name: "Orders"},
 ];

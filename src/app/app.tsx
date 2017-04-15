@@ -9,6 +9,7 @@ import {RestaurantItemPage} from "./page/RestaurantItemPage";
 import {RestaurantItemCookingSpeedPage} from "./page/RestaurantItemCookingSpeedPage";
 import {StatePage} from "./page/StatePage";
 import {CourierPage} from "./page/CourierPage";
+import {OrdersPage} from "./page/OrdersPage";
 
 injectTapEventPlugin();
 
@@ -28,6 +29,7 @@ ReactDom.render(
             <Route path="restaurant-items/:restaurantId" component={RestaurantItemPage}/>
             <Route path="restaurant-item-cooking-speed/:restaurantId/:itemNumber" component={RestaurantItemCookingSpeedPage}/>
             <Route path="couriers" component={CourierPage}/>
+            <Route path="orders" component={OrdersPage}/>
         </Route>
     </Router>,
     document.getElementById("app")
