@@ -1,6 +1,7 @@
 import * as React from "react";
 import {colors} from "material-ui/styles";
 import Paper from "material-ui/Paper";
+import {CourierSelect} from  "../order/CourierSelect"
 
 export interface OrderItemProps {
     orderData: any;
@@ -37,6 +38,10 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
         };
     }
 
+    private send(){
+        console.log(this.props.orderData)
+    }
+
     render() {
         return (
             <Paper className="row"
@@ -50,6 +55,8 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
                     <div className="col-md-3">{this.props.orderData.address}</div>
                     <div className="col-md-3">{this.props.orderData.restourant}</div>
                     <div className="col-md-3">{this.props.orderData.courier}</div>
+                    <CourierSelect couriers={this.props.orderData.couriers}/>
+                    <button onClick={this.send.bind(this)}>Send</button>
                 </div>
 
             </Paper>
