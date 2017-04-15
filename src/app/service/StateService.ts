@@ -47,6 +47,7 @@ export class StateService {
             }
         }
 
+        const orderId = Math.floor(Date.now() / 1000);
 
         const order_data = {
             restaurant_id: data[restaurantIndex].id,
@@ -60,8 +61,8 @@ export class StateService {
 
         return new Promise((resolve, reject) => {
             ajax({
-                method: "POST",
-                url: url("pick/order/add"),
+                method: "PUT",
+                url: url("pick/order/" + orderId),
                 type: "jsonp",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({order: order_data}),
