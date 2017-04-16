@@ -10,6 +10,7 @@ declare module "Model" {
     export type OrderStatus = "todo" | "done" | "inProgress";
 
     export interface IOrder {
+        show:boolean;
         id: number|string;
         status: OrderStatus;
         courier_id: number|string;

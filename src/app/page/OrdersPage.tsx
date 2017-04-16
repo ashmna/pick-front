@@ -3,8 +3,10 @@ import {IInjectedProps} from "react-router";
 import CircularProgress from "material-ui/CircularProgress";
 import {OrderService} from "../service/OrderService";
 import {OrderItem} from "../component/order/OrderItem";
+import {OrderItemShort} from "../component/order/OrderItemShort";
 import {IOrder} from "Model";
 import Pagination from "material-ui-pagination";
+import {SettingsPage} from "./SettingsPage";
 
 
 interface IOrdersPageProps extends IInjectedProps {
@@ -84,6 +86,11 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
             });
     }
 */
+    private toggleItemHandler(order:any,show:boolean){
+        console.log(order);
+        order.show  =show;
+        //this.setState({})
+    }
 
     render() {
         const pagination = this.renderPagination();
@@ -109,7 +116,13 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
                     <div className="row"  style={{transform: "scale(0.8)"}}>
                         <div className="col-xs-12">
                             {this.orders.map((order, index) => (
-                                <OrderItem key={index} order={order}/>
+                                <div>
+                                    {!order.show&&<div>
+                                        <span onClick={() => this.toggleItemHandler(order,true)}>+</span>
+                                        <OrderItemShort key={index} order={order}/>
+                                    </div>}
+                                    {order.show&&<div><span onClick={() => this.toggleItemHandler(order,false)}>-</span><OrderItem key={index} order={order}/></div>}
+                                </div>
                             ))}
                         </div>
                     </div>
