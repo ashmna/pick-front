@@ -8,6 +8,8 @@ import {IOrder} from "Model";
 import Pagination from "material-ui-pagination";
 import {SettingsPage} from "./SettingsPage";
 
+import PlusIcon from "material-ui/svg-icons/content/add";
+import MinusIcon from "material-ui/svg-icons/content/remove";
 
 interface IOrdersPageProps extends IInjectedProps {
     loading?: boolean;
@@ -89,7 +91,7 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
     private toggleItemHandler(order:any,show:boolean){
         console.log(order);
         order.show  =show;
-        //this.setState({})
+        this.setState({})
     }
 
     render() {
@@ -118,10 +120,13 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
                             {this.orders.map((order, index) => (
                                 <div>
                                     {!order.show&&<div>
-                                        <span onClick={() => this.toggleItemHandler(order,true)}>+</span>
+                                        <span className="toggleIcon" onClick={() => this.toggleItemHandler(order,true)}><PlusIcon/></span>
                                         <OrderItemShort key={index} order={order}/>
                                     </div>}
-                                    {order.show&&<div><span onClick={() => this.toggleItemHandler(order,false)}>-</span><OrderItem key={index} order={order}/></div>}
+                                    {order.show&&<div>
+                                        <span className="toggleIcon" onClick={() => this.toggleItemHandler(order,false)}><MinusIcon/></span>
+                                        <OrderItem key={index} order={order}/>
+                                    </div>}
                                 </div>
                             ))}
                         </div>

@@ -10,6 +10,11 @@ body {
 }
 
 
+
+.toggleIcon{
+    position: absolute;
+    right: 25px;
+}
 .transport-type{
     display: flex;
 }

@@ -24,7 +24,7 @@ export class DashboardAppBar extends React.Component<IDashboardAppBarProps, IDas
     render() {
         return (
             <AppBar
-                title="Dashboard"
+                title="Pick's Dashboard"
                 onLeftIconButtonTouchTap={() => this.openMenu()}
             />
         );

@@ -8,6 +8,7 @@ import OrderLocationIcon from "material-ui/svg-icons/communication/location-on";
 import OrderFoodsIcon from "material-ui/svg-icons/action/home";
 import RestaurantLocationIcon from "material-ui/svg-icons/action/shopping-cart";
 
+
 import {couriers} from "../../settings";
 import {OrderStatusInfoSuggested} from "./OrderStatusInfoSuggested";
 import {OrderStatusInfoPending} from "./OrderStatusInfoPending";
@@ -113,59 +114,25 @@ export class OrderItemShort extends React.Component<OrderItemShortProps, OrderIt
                    onMouseEnter={() => this.setState({active: true})}
                    onMouseLeave={() => this.setState({active: false})}
             >
-                <div className="col-md-8">
-                    <div className="row">
-                        <div className="col-xs-12">
+                    <div className=" col-md-3">
+                        <div >
                             <OrderLocationIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["order_address"]}
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12">
+                    <div className="col-md-3">
+                        <div >
                             <RestaurantLocationIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["order_item_info"]}
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12">
+                    <div className=" col-md-3">
+                        <div>
                             <OrderFoodsIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["restaurant_info"]}
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <SelectField
-                                value={this.state.selectedCourier}
-                                onChange={this.courierChangeHandler.bind(this)}
-                                fullWidth={true}
-                            >
-                                {this.couriers.map((courier: any, index: number) => (
-                                    <MenuItem
-                                        value={courier}
-                                        key={index}
-                                        primaryText={courier.name}
-                                        secondaryText={courier.transport_type}
-                                    />
-                                ))}
 
-                            </SelectField>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    {this.props.order.status === "todo" && !this.props.order.courier_id &&
-                    <OrderStatusInfoPending reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
-                    }
-                    {this.props.order.status === "todo" && this.props.order.courier_id &&
-                    <OrderStatusInfoSuggested reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
-                    }
-                    {this.props.order.status === "inProgress" &&
-                    <OrderStatusInfoConfirmed reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
-                    }
-                    {this.props.order.status === "done" &&
-                    <OrderStatusInfoCompleted reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
-                    }
-                </div>
             </Paper>
         );
     }
