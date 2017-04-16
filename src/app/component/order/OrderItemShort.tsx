@@ -30,6 +30,12 @@ export interface OrderItemShortState {
 
 
 const style = {
+
+    text:{
+        textOverflow: "ellipsis",
+        overflow: "hidden",
+        whiteSpace: "nowrap"
+    },
     normal: {
         margin: "5px",
         padding: "10px",
@@ -115,19 +121,19 @@ export class OrderItemShort extends React.Component<OrderItemShortProps, OrderIt
                    onMouseLeave={() => this.setState({active: false})}
             >
                     <div className=" col-md-3">
-                        <div >
+                        <div style={style.text}>
                             <OrderLocationIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["order_address"]}
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <div >
+                        <div style={style.text}>
                             <RestaurantLocationIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["order_item_info"]}
                         </div>
                     </div>
                     <div className=" col-md-3">
-                        <div>
+                        <div style={style.text}>
                             <OrderFoodsIcon style={style.icon} color={colors.grey600}/>
                             {this.props.order["restaurant_info"]}
                         </div>
