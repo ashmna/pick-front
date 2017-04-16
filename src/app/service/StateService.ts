@@ -18,22 +18,23 @@ export class StateService {
 
     setRandomOrder(): Promise<any> {
         const data = [
-            {id: 19,  lat: 40.1665764, lng: 44.5132354, items: [30, 31, 34]},
-            {id: 49,  lat: 40.1739979, lng: 44.5213035, items: [71, 72, 75]},
-            {id: 51,  lat: 40.1837310, lng: 44.5111862, items: [291, 216, 217]},
-            {id: 52,  lat: 40.1918892, lng: 44.5203795, items: [1, 38, 42]},
-            {id: 64,  lat: 40.2062505, lng: 44.5254904, items: [20, 22, 64]},
-            {id: 71,  lat: 40.1796961, lng: 44.5004573, items: [55, 59, 64]},
-            {id: 95,  lat: 40.1778973, lng: 44.5189876, items: [54, 57, 115]},
-            {id: 117, lat: 40.1829508, lng: 44.5166621, items: [62, 88, 89]},
-            {id: 159, lat: 40.1829508, lng: 44.5166621, items: [96, 97, 98]},
-            {id: 187, lat: 40.1798593, lng: 44.5250268, items: [49, 50, 51]},
-            {id: 252, lat: 40.1796961, lng: 44.5004573, items: [15, 16, 18]},
-            {id: 284, lat: 40.1829508, lng: 44.5166621, items: [126, 117, 102]},
-            {id: 353, lat: 40.1820773, lng: 44.5146677, items: [277, 200, 181]},
-            {id: 386, lat: 40.2057999, lng: 44.5062259, items: [102, 59, 55]},
-            {id: 597, lat: 40.1837310, lng: 44.5111862, items: [19, 28, 32]},
+            {id: 19,  name: "Գենացվալե Պանդոկ",           lat: 40.1665764, lng: 44.5132354, items: [30, 31, 34]},
+            {id: 49,  name: "Պանդոկ Երևան",               lat: 40.1739979, lng: 44.5213035, items: [71, 72, 75]},
+            {id: 51,  name: "Կարաս ազգային սննդի ցանց",   lat: 40.1837310, lng: 44.5111862, items: [291, 216, 217]},
+            {id: 52,  name: "Մր. Գիրոս",                  lat: 40.1918892, lng: 44.5203795, items: [1, 38, 42]},
+            {id: 64,  name: "Երևանի շաուրմա",             lat: 40.2062505, lng: 44.5254904, items: [20, 22, 64]},
+            {id: 71,  name: "Աֆրիկյանների Ռեստորան",      lat: 40.1796961, lng: 44.5004573, items: [55, 59, 64]},
+            {id: 95,  name: "Բլեք Անգուս",                lat: 40.1778973, lng: 44.5189876, items: [54, 57, 115]},
+            {id: 117, name: "Լիբանանյան շաուրմա",         lat: 40.1829508, lng: 44.5166621, items: [62, 88, 89]},
+            {id: 159, name: "Բելլա Իտալիա",               lat: 40.1829508, lng: 44.5166621, items: [96, 97, 98]},
+            {id: 187, name: "Ծիրանի",                     lat: 40.1798593, lng: 44.5250268, items: [49, 50, 51]},
+            {id: 252, name: "Լա Քուչինա",                 lat: 40.1796961, lng: 44.5004573, items: [15, 16, 18]},
+            {id: 284, name: "Թումանյան շաուրմա",          lat: 40.1829508, lng: 44.5166621, items: [126, 117, 102]},
+            {id: 353, name: "Վասաբի",                     lat: 40.1820773, lng: 44.5146677, items: [277, 200, 181]},
+            {id: 386, name: "Կովկաս Պանդոկ",              lat: 40.2057999, lng: 44.5062259, items: [102, 59, 55]},
+            {id: 597, name: "Grill.am",                   lat: 40.1837310, lng: 44.5111862, items: [19, 28, 32]},
         ];
+
         const restaurantIndex = this.getRandomInt(0, data.length - 1);
         const {lat, lng} = randomLatLng();
         const itemCount = this.getRandomInt(1, data[restaurantIndex].items.length);
@@ -47,6 +48,16 @@ export class StateService {
             }
         }
 
+        const info = [
+            "1 Խորոված կարտոֆիլ և սոխ, 2 կոլա, 4 բաժին հաց",
+            "2 Խոզի խորոված չալաղաջ, 1 կոլա, 1 բաժին հաց",
+            "3 Տավարի քյաբաբ կտրատած մսով, 2 կոլա, թ բաժին հաց",
+            "1 Կեր ու սուս, 2 կոլա, 4 բաժին հաց",
+            "2 Խեցգետնի քյաբաբ, 4 կոլա, 4 բաժին հաց",
+            "3 Կարագով տապակած կարտոֆիլ, 2 կոլա, 1 բաժին հաց",
+            "1 Խոզի խորոված մատեր, 2 կոլա, 3 բաժին հաց",
+        ];
+
         const orderId = Math.floor(Date.now() / 1000);
 
         const order_data = {
@@ -56,20 +67,23 @@ export class StateService {
             lat_client: lat,
             lng_client: lng,
             items: items,
+
+            order_address: `some place in Yerevan with lat: ${lat}, lng: ${lng}`,
+            order_item_info: info[Math.floor(Math.random() * info.length)],
+            restaurant_info: data[restaurantIndex].name,
         };
 
 
         return new Promise((resolve, reject) => {
-            /*ajax({
-                method: "PUT",
+            ajax({
+                method: "POST",
                 url: url("pick/order/" + orderId),
                 type: "jsonp",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({order: order_data}),
             })
                 .done(resolve)
-                .fail(reject);*/
-            resolve()
+                .fail(reject);
         });
     }
 

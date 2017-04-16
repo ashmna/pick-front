@@ -1,12 +1,10 @@
 import * as React from "react";
 import {IInjectedProps} from "react-router";
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
-import FlatButton from 'material-ui/FlatButton';
-import {randomLatLng} from "../helper/index";
+import CircularProgress from "material-ui/CircularProgress";
 import {OrderService} from "../service/OrderService";
 import {OrderItem} from "../component/order/OrderItem";
-
-
+import {IOrder} from "Model";
+import Pagination from "material-ui-pagination";
 
 
 interface IOrdersPageProps extends IInjectedProps {
@@ -19,8 +17,11 @@ interface IOrdersPageState {
 
 export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPageProps> {
 
-    private orders: any[] = [];
     private orderService = new OrderService();
+    private orders: IOrder[] = [];
+    private limit: number = 35;
+    private totalCount: number = 0;
+    private page: number = 1;
 
     constructor(props: IOrdersPageProps, context: any) {
         super(props, context);
@@ -37,11 +38,16 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
         this.setState({loading: true});
         this.orderService
             .getOrders()
-            .then((orders: any[]) => {
-                this.orders = orders;
+            .then(res => {
+                this.totalCount = res.total;
+                this.orders = res.data;
                 this.setState({loading: false});
-                console.log(this.orders);
             });
+    }
+
+    private pageChangeHandler(page: number) {
+        this.page = page;
+        this.loadOrders();
     }
 /*
 
@@ -80,19 +86,60 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
 */
 
     render() {
+        const pagination = this.renderPagination();
+        const loading = this.renderLoading();
 
-        if (this.state.loading) {
-            return (<h1>Loading...</h1>);
-        }
         return (
-            <div>
+            <div className="row">
+                <div className="col-xs-12">
+                    <div className="row">
+                        <div className="col-xs-11">
+                            Filter todo
+                        </div>
+                        <div className="col-xs-1">
+                            {loading}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-xs-12">
+                            {pagination}
+                        </div>
+                    </div>
 
-                {this.orders.map((order, index) => (
-                    <OrderItem key={index} orderData={order}/>
+                    <div className="row"  style={{transform: "scale(0.8)"}}>
+                        <div className="col-xs-12">
+                            {this.orders.map((order, index) => (
+                                <OrderItem key={index} order={order}/>
+                            ))}
+                        </div>
+                    </div>
 
-                ))}
+                    <div className="row">
+                        <div className="col-xs-12">
+                            {pagination}
+                        </div>
+                    </div>
+                </div>
             </div>
         );
-
+    }
+    private renderLoading() {
+        if (this.state.loading) {
+            return (<CircularProgress size={20}/>);
+        }
+        return (<div/>);
+    }
+    private renderPagination() {
+        if (this.totalCount <= this.limit) {
+            return (<div/>);
+        }
+        return (
+            <Pagination
+                total={Math.ceil(this.totalCount / this.limit)}
+                current={this.page}
+                display={7}
+                onChange={this.pageChangeHandler.bind(this)}
+            />
+        );
     }
 }

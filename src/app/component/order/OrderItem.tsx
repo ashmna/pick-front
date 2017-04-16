@@ -1,5 +1,4 @@
 import * as React from "react";
-import {CourierSelect} from  "../order/CourierSelect"
 import {colors} from "material-ui/styles";
 import Paper from "material-ui/Paper";
 import SelectField from "material-ui/SelectField";
@@ -7,19 +6,24 @@ import MenuItem from "material-ui/MenuItem";
 import OrderLocationIcon from "material-ui/svg-icons/communication/location-on";
 import OrderFoodsIcon from "material-ui/svg-icons/action/home";
 import RestaurantLocationIcon from "material-ui/svg-icons/action/shopping-cart";
-import BicycleIcon from "material-ui/svg-icons/maps/directions-bike";
-import CarIcon from "material-ui/svg-icons/maps/directions-boat";
-import BikeIcon from "material-ui/svg-icons/action/motorcycle";
-import origin = __MaterialUI.propTypes.origin;
-import {white} from "material-ui/styles/colors";
+
+import {couriers} from "../../settings";
+import {OrderStatusInfoSuggested} from "./OrderStatusInfoSuggested";
+import {OrderStatusInfoPending} from "./OrderStatusInfoPending";
+import {IOrder} from "Model";
+import {ICourier} from "Model";
+import {OrderStatusInfoConfirmed} from "./OrderStatusInfoConfirmed";
+import {OrderStatusInfoCompleted} from "./OrderStatusInfoCompleted";
+import {OrderService} from "../../service/OrderService";
 
 export interface OrderItemProps {
-    orderData: any;
+    order: IOrder;
 }
 
 export interface OrderItemState {
     active?: boolean;
     selectedCourier?: any;
+    loading?: boolean;
 }
 
 
@@ -38,57 +42,93 @@ const style = {
     activeIcon: {
         color: colors.grey600,
     },
+    icon: {
+        paddingTop: "5px",
+        position: "relative",
+        top: "3px",
+    }
 };
 
 export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
 
+    private couriers: any = couriers;
+    private orderService: OrderService = new OrderService();
 
-    private couriers: any = [
-        {id: 1, transport_type: "Car", name: "Vle"},
-        {id: 2, transport_type: "Bicycle", name: "Gugo"},
-        {id: 3, transport_type: "Bike", name: "Xcho"},
-    ];
     constructor(props: OrderItemProps, context: any) {
         super(props, context);
         this.state = {
             active: false,
-            selectedCourier: this.couriers[0]||null,
+            selectedCourier: null,
+            loading: false,
         };
     }
 
-    private send(){
-        console.log(this.props.orderData)
+    componentDidMount() {
+        this.detectSelectedCourier();
+    }
+
+    private detectSelectedCourier() {
+        this.setState({selectedCourier: this.getCourierByOrder()});
     }
 
     private courierChangeHandler(event: any, index: number, value: any) {
         this.setState({selectedCourier: value});
+        this.reload(true);
+        this.orderService.setCourierToOrder(this.props.order, value)
+            .then(res => {
+                this.reload();
+            });
+    }
+
+    private getCourierByOrder(): ICourier {
+        let courier = null;
+        couriers.forEach(item => {
+            if (item.id === this.props.order.courier_id) {
+                courier = item;
+            }
+        });
+        return courier;
+    }
+
+    private reload(onlyUI: boolean = false) {
+        this.setState({loading: true});
+        if (onlyUI) {
+            return;
+        }
+        this.orderService.getOrder(this.props.order.id)
+            .then(order => {
+                // fixme: la focus, do not touch !!!!
+                const ObjectClass: any = Object;
+                ObjectClass.assign(this.props.order, order);
+                this.setState({loading: false});
+            });
     }
 
     render() {
         return (
             <Paper className="row"
-                 style={this.state.active ? style.active : style.normal}
-                 zDepth={this.state.active ? 3 : 1}
-                 onMouseEnter={() => this.setState({active: true})}
-                 onMouseLeave={() => this.setState({active: false})}
+                   style={this.state.active ? style.active : style.normal}
+                   zDepth={this.state.active ? 3 : 1}
+                   onMouseEnter={() => this.setState({active: true})}
+                   onMouseLeave={() => this.setState({active: false})}
             >
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-xs-12">
-                            <OrderLocationIcon color={colors.grey600}/>
-                            {this.props.orderData["order_address"]}
+                            <OrderLocationIcon style={style.icon} color={colors.grey600}/>
+                            {this.props.order["order_address"]}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
-                            <OrderFoodsIcon color={colors.grey600}/>
-                            {this.props.orderData["order_item_info"]}
+                            <RestaurantLocationIcon style={style.icon} color={colors.grey600}/>
+                            {this.props.order["order_item_info"]}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-xs-12">
-                            <RestaurantLocationIcon color={colors.grey600}/>
-                            {this.props.orderData["restaurant_info"]}
+                            <OrderFoodsIcon style={style.icon} color={colors.grey600}/>
+                            {this.props.order["restaurant_info"]}
                         </div>
                     </div>
                     <div className="row">
@@ -112,46 +152,18 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
                     </div>
                 </div>
                 <div className="col-md-4">
-                    <div className="row">
-                        <div className="col-xs-12">
-
-                        </div>
-                    </div>
-                    <div className="row courier-info">
-
-                        <div className="col-xs-2 col-md-2">
-                            <h2>{this.state.selectedCourier["name"]}</h2>
-                        </div>
-                        <div className="col-xs-4 col-md-4 courier-image">
-                            <img src="https://i.stack.imgur.com/Lkn5a.png?s=328&g=1"/>
-
-                        </div>
-
-                    </div>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            <div className="row">
-                                <h3 className="transport-type">
-                                    <span>transport - </span>
-                                    <span className="transport-type-title">
-                                        <span >{this.state.selectedCourier["transport_type"]}</span>
-
-                                        {this.state.selectedCourier["transport_type"] === "Bike" && <BikeIcon color={colors.grey600}/>}
-                                        {this.state.selectedCourier["transport_type"] === "Car" && <CarIcon color={colors.grey600}/>}
-                                        {this.state.selectedCourier["transport_type"] === "Bicycle" && <BicycleIcon color={colors.grey600}/>}
-                                    </span>
-                                </h3>
-                                <span className="col-md-4">
-
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-12">
-                                <h3>Will deliver at {this.state.selectedCourier.eta}</h3>
-                            </div>
-                        </div>
-                    </div>
+                    {this.props.order.status === "todo" && !this.props.order.courier_id &&
+                    <OrderStatusInfoPending reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
+                    }
+                    {this.props.order.status === "todo" && this.props.order.courier_id &&
+                    <OrderStatusInfoSuggested reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
+                    }
+                    {this.props.order.status === "inProgress" &&
+                    <OrderStatusInfoConfirmed reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
+                    }
+                    {this.props.order.status === "done" &&
+                    <OrderStatusInfoCompleted reload={this.reload.bind(this)} courier={this.getCourierByOrder()} order={this.props.order}/>
+                    }
                 </div>
             </Paper>
         );
