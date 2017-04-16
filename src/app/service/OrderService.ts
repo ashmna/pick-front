@@ -62,7 +62,7 @@ export class OrderService {
         return new Promise((resolve, reject) => {
             ajax({
                 method: "PUT",
-                url: url("pick/order/courier/" + order.id + "/" + courier.id),
+                url: url("pick/order/courier/" + order.order_id + "/" + courier.id),
                 type: "jsonp",
                 contentType: "application/json; charset=utf-8",
             })
@@ -75,7 +75,7 @@ export class OrderService {
         return new Promise((resolve, reject) => {
             ajax({
                 method: "PUT",
-                url: url("pick/order/" + order.id),
+                url: url("pick/order/" + order.order_id),
                 type: "jsonp",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({
@@ -92,7 +92,7 @@ export class OrderService {
         return new Promise((resolve, reject) => {
             ajax({
                 method: "PUT",
-                url: url("pick/order/" + order.id),
+                url: url("pick/order/" + order.order_id),
                 type: "jsonp",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({

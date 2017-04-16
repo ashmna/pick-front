@@ -77,7 +77,7 @@ export class OrderStatusInfoSuggested extends React.Component<IOrderStatusInfoPr
                                 />
                               }
                         >
-                            ETA: {(new Date(this.props.order.estimated_complete_datetime.$date)).toISOString()}
+                            ETA: After {Math.round(((new Date(this.props.order.estimated_complete_datetime.$date)).getTime()- (new Date()).getTime())/(60000))} ({(new Date(this.props.order.estimated_complete_datetime.$date)).toISOString().substr(11,8)})
                         </ListItem>
                     </List>
                     <div className="row">
@@ -105,6 +105,7 @@ export class OrderStatusInfoSuggested extends React.Component<IOrderStatusInfoPr
 
     private confirmCourierForOrder() {
         this.props.reload(true);
+         console.log(this.props.order);
         this.orderService.confirmCourierForOrder(this.props.order, this.props.courier)
             .then(res => {
                 this.props.reload();

@@ -119,14 +119,14 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
                     <div className="row">
                         <div className="col-xs-12">
                             {this.orders.map((order, index) => (
-                                <div>
+                                <div key={index}>
                                     {!order.show&&<div>
                                         <span className="toggleIcon" onClick={() => this.toggleItemHandler(order,true)}><PlusIcon/></span>
-                                        <OrderItemShort key={index} order={order}/>
+                                        <OrderItemShort order={order}/>
                                     </div>}
                                     {order.show&&<div>
                                         <span className="toggleIcon" onClick={() => this.toggleItemHandler(order,false)}><MinusIcon/></span>
-                                        <OrderItem key={index} order={order}/>
+                                        <OrderItem order={order}/>
                                     </div>}
                                 </div>
                             ))}

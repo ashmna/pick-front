@@ -95,7 +95,7 @@ export class OrderItem extends React.Component<OrderItemProps, OrderItemState> {
         if (onlyUI) {
             return;
         }
-        this.orderService.getOrder(this.props.order.id)
+        this.orderService.getOrder(this.props.order.order_id)
             .then(order => {
                 // fixme: la focus, do not touch !!!!
                 const ObjectClass: any = Object;

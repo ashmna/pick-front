@@ -12,6 +12,7 @@ declare module "Model" {
     export interface IOrder {
         show:boolean;
         id: number|string;
+        order_id: number|string;
         status: OrderStatus;
         courier_id: number|string;
         is_courier_picked_manual: boolean;
