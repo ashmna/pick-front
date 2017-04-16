@@ -36,12 +36,13 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
 
     componentDidMount() {
         this.loadOrders();
+        // setInterval(() => this.loadOrders(), 5000);
     }
 
     private loadOrders() {
         this.setState({loading: true});
         this.orderService
-            .getOrders()
+            .getOrders(this.page, this.limit)
             .then(res => {
                 this.totalCount = res.total;
                 this.orders = res.data;
@@ -115,7 +116,7 @@ export class OrdersPage extends React.Component<IOrdersPageState, IOrdersPagePro
                         </div>
                     </div>
 
-                    <div className="row"  style={{transform: "scale(0.8)"}}>
+                    <div className="row">
                         <div className="col-xs-12">
                             {this.orders.map((order, index) => (
                                 <div>

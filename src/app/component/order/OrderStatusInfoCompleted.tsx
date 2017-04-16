@@ -72,7 +72,7 @@ export class OrderStatusInfoCompleted extends React.Component<IOrderStatusInfoPr
                                 />
                               }
                         >
-                            ETA: {this.props.order.eta}
+                            ETA: {(new Date(this.props.order.estimated_complete_datetime.$date)).toISOString()}
                         </ListItem>
                     </List>
                 </div>

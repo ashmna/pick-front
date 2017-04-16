@@ -1,7 +1,31 @@
 import {URL_ROOT} from "../settings";
 
-export function url(path: string) {
-    return `${URL_ROOT}/${path}`;
+export function url(path: string, query: any = {}) {
+    const queryString: string = buildQueryString(query);
+    const url = `${URL_ROOT}/${path}`;
+    if (queryString) {
+        return url + "?" + queryString;
+    }
+    return url;
+}
+
+function buildQueryString(query: any) {
+    query = query || {};
+    const arr: string[] = [];
+    for (let key in query) {
+        if (key === "where") {
+            arr.push(key + "=" + JSON.stringify(query[key]));
+        } else {
+            if (query[key] === true) {
+                query[key] = 1;
+            }
+            if (query[key] === false) {
+                query[key] = 0;
+            }
+            arr.push(key + "=" + query[key]);
+        }
+    }
+    return arr.join("&");
 }
 
 export function randomLatLng() {

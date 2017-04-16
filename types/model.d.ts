@@ -15,7 +15,7 @@ declare module "Model" {
         status: OrderStatus;
         courier_id: number|string;
         is_courier_picked_manual: boolean;
-        eta: string;
+        estimated_complete_datetime: {$date: number};
         order_address: string;
         order_item_info: string;
         restaurant_info: string;
